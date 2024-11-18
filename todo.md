@@ -1,0 +1,1 @@
+- [ ] query 1 card name and return the value of cards that contains the name of the query with value 1 or 0 whether they are in stock or not
