@@ -2,7 +2,8 @@
 - [x] use query to request to search API and store values that include the filteredCards
 - [x] make so the stored cards are not getting repeated, just one time stored if the name doesn't exist
 - [x] the response is only returning the cards that have stock, is this the behavior we want? maybe
-- [ ] search on queryUrl for stock values for each card and store on cardResults (search for span "variant-short-info variant-qty" for text stock values)
+- [x] create 3 endpoints to fetch card status, archidekt deck url, username, deck id from username response
+- [ ] for each card on deck, query card name to pirulo endpoint and return those who have stock and how much
 
 ### API details
 
@@ -13,3 +14,5 @@
   - data-price (price)
   - data-category (card set)
   - data-variant (state of card)
+
+_Archidekt API?_

@@ -2,7 +2,7 @@
   "name": "deck-scout-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.7",
     "express": "^4.21.1",
     "node-fetch": "^3.3.2"
   }
