@@ -3,7 +3,8 @@
 - [x] make so the stored cards are not getting repeated, just one time stored if the name doesn't exist
 - [x] the response is only returning the cards that have stock, is this the behavior we want? maybe
 - [x] create 3 endpoints to fetch card status, archidekt deck url, username, deck id from username response
-- [ ] for each card on deck, query card name to pirulo endpoint and return those who have stock and how much
+- [x] from user-decks endpoint fetch decks and call deck-cards endpoint to fetch cards from each deck
+- [ ] for each card on deck, query card name to pirulo endpoint and return those who have stock and how much (how the fuck do i do this... send help)
 
 ### API details
 
@@ -16,3 +17,23 @@
   - data-variant (state of card)
 
 _Archidekt API?_
+
+### STRUCTURE
+
+- /user-decks
+  fetch for user decks and return decks data:
+  ownerId: deck.owner.id,
+  username: deck.owner.username,
+  deckName: deck.name,
+  deckId: deck.id,
+  deckImage: deck.featured,
+
+- /deck-data
+  fetch for cards data of given id and return all card names and quantity
+
+### LOGIC
+
+There are two main ways to get a deck data
+
+- 1: You paste the deck url and extract the program extracts the id
+- 2: You save your archidekt user on deck scout and get all your decks provided by te program so when you click on one you search for the deck id extracted by the program

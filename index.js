@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 
 // Endpoint to fetch cards data from Archidekt with a deck URL
-app.get("/deck-scout", async (req, res) => {
+app.get("/deck-url", async (req, res) => {
   const archidektUrl = req.query.url;
   if (!archidektUrl) {
     return res
@@ -29,7 +29,18 @@ app.get("/deck-scout", async (req, res) => {
     }
 
     const data = await response.json();
-    res.json(data);
+    async function getCardsData() {
+      const allCardData = await Promise.all(
+        data.map(async (card) => ({
+          name: card.card.oracleCard.name,
+          quantity: card.quantity,
+        }))
+      );
+      return allCardData;
+    }
+
+    const cardsData = await getCardsData();
+    res.send(cardsData);
   } catch (error) {
     console.error("Error:", error);
     res.status(500).json({
@@ -40,7 +51,7 @@ app.get("/deck-scout", async (req, res) => {
   }
 });
 
-// Endpoint to fetch decks by archidekt username
+// Endpoint to fetch user decks from Archidekt
 app.get("/user-decks", async (req, res) => {
   const username = req.query.username;
   if (!username) {
@@ -74,34 +85,6 @@ app.get("/user-decks", async (req, res) => {
       error: "Error fetching user decks",
       message: error.message,
       details: `Failed to fetch decks for user: ${username}`,
-    });
-  }
-});
-
-// Enpoint to fetch cards data from user-decks response
-app.get("/deck-cards", async (req, res) => {
-  const deckId = req.query.deckId;
-  if (!deckId) {
-    return res.status(400).send("Deck ID is required as a query parameter");
-  }
-
-  try {
-    const response = await fetch(
-      `https://archidekt.com/api/decks/${deckId}/cards/`
-    );
-
-    if (!response.ok) {
-      throw new Error(`Archidekt API returned status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({
-      error: "Error fetching deck data",
-      message: error.message,
-      details: `Failed to fetch deck ID: ${deckId}`,
     });
   }
 });
