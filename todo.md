@@ -37,3 +37,7 @@ There are two main ways to get a deck data
 
 - 1: You paste the deck url and extract the program extracts the id
 - 2: You save your archidekt user on deck scout and get all your decks provided by te program so when you click on one you search for the deck id extracted by the program
+
+## CURRENT STATUS
+
+- /search is getting the cards available with stock but cases where one card variety example Chatterfang, Squirrel General has 3 in stock being 2 in NM-Mint, Japanese and one Light Play, English then doesn't specify or create a new iteration of the same card with different data, also doesn't metion how much stock of the available card are
