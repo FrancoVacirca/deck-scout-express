@@ -1,10 +1,19 @@
+#### Change Log
+
 - [x] store the filtered cards from query
 - [x] use query to request to search API and store values that include the filteredCards
 - [x] make so the stored cards are not getting repeated, just one time stored if the name doesn't exist
 - [x] the response is only returning the cards that have stock, is this the behavior we want? maybe
 - [x] create 3 endpoints to fetch card status, archidekt deck url, username, deck id from username response
 - [x] from user-decks endpoint fetch decks and call deck-cards endpoint to fetch cards from each deck
-- [ ] for each card on deck, query card name to pirulo endpoint and return those who have stock and how much (how the fuck do i do this... send help)
+- [x] for each card on deck, query card name to pirulo endpoint and return those who have stock and how much (how the fuck do i do this... send help)
+
+### TODOs
+
+- [ ] organize files on a common structure for better maintainability and code readability (for this see last chat with copilot)
+- [ ] magic dealers
+- [ ] create test cases
+- [ ] make it open source
 
 ### API details
 
