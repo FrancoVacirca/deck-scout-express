@@ -1,4 +1,6 @@
 import mtgpiruloService from "../services/mtgpiruloService.js";
+import dealersService from "../services/dealersService.js";
+import tolariaService from "../services/tolariaService.js";
 import archidektService from "../services/archidektService.js";
 
 class CardController {
@@ -10,8 +12,17 @@ class CardController {
           .status(400)
           .send("Card name is required as a query parameter");
       }
-      const cards = await mtgpiruloService.searchCard(name);
-      res.json(cards);
+
+      const [piruloCards, dealersCards, tolariaCards] = await Promise.all([
+        mtgpiruloService.searchCard(name),
+        dealersService.searchCard(name),
+        tolariaService.searchCard(name),
+      ]);
+
+      res.json({
+        name,
+        results: [...piruloCards, ...dealersCards, ...tolariaCards],
+      });
     } catch (error) {
       res
         .status(500)
@@ -51,20 +62,32 @@ class CardController {
 
       const availableCards = await Promise.all(
         deckCards.map(async (card) => {
-          const piruloCards = await mtgpiruloService.searchCard(card.name);
+          const [piruloCards, dealersCards, tolariaCards] = await Promise.all([
+            mtgpiruloService.searchCard(card.name),
+            dealersService.searchCard(card.name),
+            tolariaService.searchCard(card.name),
+          ]);
+
           return {
             name: card.name,
-            availableVersions: piruloCards,
+            quantity: card.quantity,
+            availability: {
+              pirulo: piruloCards,
+              dealers: dealersCards,
+              tolaria: tolariaCards,
+            },
           };
         })
       );
 
       res.json(availableCards);
     } catch (error) {
-      res.status(500).json({
-        error: "Error fetching deck availability",
-        message: error.message,
-      });
+      res
+        .status(500)
+        .json({
+          error: "Error fetching deck availability",
+          message: error.message,
+        });
     }
   }
 }

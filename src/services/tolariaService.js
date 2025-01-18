@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import config from "../config/config.js";
 
-class MTGPiruloService {
+class TolariaService {
   async searchCard(cardName) {
     const autocompleteData = await this.getAutocomplete(cardName);
     const filteredCards = autocompleteData.filter((card) =>
@@ -13,7 +13,7 @@ class MTGPiruloService {
 
   async getAutocomplete(cardName) {
     const url = `${
-      config.mtgpiruloBaseUrl
+      config.tolariaBaseUrl
     }/search/autocomplete?term=${encodeURIComponent(cardName)}`;
     const response = await fetch(url);
     return response.json();
@@ -21,7 +21,7 @@ class MTGPiruloService {
 
   async getCardDetails(cardName, filteredCards) {
     const url = `${
-      config.mtgpiruloBaseUrl
+      config.tolariaBaseUrl
     }/products/search?q=${encodeURIComponent(cardName)}`;
     const response = await fetch(url);
     const body = await response.text();
@@ -42,7 +42,7 @@ class MTGPiruloService {
         )
       ) {
         cards.push({
-          store: "Pirulo",
+          store: "Tolaria",
           name: match[2],
           id: match[3],
           price: match[4],
@@ -56,4 +56,4 @@ class MTGPiruloService {
   }
 }
 
-export default new MTGPiruloService();
+export default new TolariaService();
