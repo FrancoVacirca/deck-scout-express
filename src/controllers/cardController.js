@@ -68,8 +68,10 @@ class CardController {
             tolariaService.searchCard(card.name),
           ]);
 
+          const shortLabel = card.label.split(",")[0];
           return {
             name: card.name,
+            label: shortLabel,
             quantity: card.quantity,
             availability: {
               pirulo: piruloCards,
@@ -82,12 +84,10 @@ class CardController {
 
       res.json(availableCards);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          error: "Error fetching deck availability",
-          message: error.message,
-        });
+      res.status(500).json({
+        error: "Error fetching deck availability",
+        message: error.message,
+      });
     }
   }
 }
