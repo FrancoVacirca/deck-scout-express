@@ -30,24 +30,6 @@ class CardController {
     }
   }
 
-  async getDeckByUrl(req, res) {
-    try {
-      const { url } = req.query;
-      if (!url) {
-        return res
-          .status(400)
-          .send("Archidekt URL is required as a query parameter");
-      }
-      const deckId = archidektService.extractDeckId(url);
-      const cards = await archidektService.getDeckById(deckId);
-      res.json(cards);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ error: "Error fetching deck data", message: error.message });
-    }
-  }
-
   async getDeckCardsAvailability(req, res) {
     try {
       const { url } = req.query;
@@ -71,8 +53,10 @@ class CardController {
           const shortLabel = card.label.split(",")[0];
           return {
             name: card.name,
+            // id: card.id,
             label: shortLabel,
             quantity: card.quantity,
+            url: card.url,
             availability: {
               pirulo: piruloCards,
               dealers: dealersCards,

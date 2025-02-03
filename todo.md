@@ -7,13 +7,17 @@
 - [x] create 3 endpoints to fetch card status, archidekt deck url, username, deck id from username response
 - [x] from user-decks endpoint fetch decks and call deck-cards endpoint to fetch cards from each deck
 - [x] for each card on deck, query card name to pirulo endpoint and return those who have stock and how much (how the fuck do i do this... send help)
+- [x] organize files on a common structure for better maintainability and code readability (for this see last chat with copilot)
+- [x] magic dealers
+- [x] install and use nodemon
 
 ### TODOs
 
-- [ ] organize files on a common structure for better maintainability and code readability (for this see last chat with copilot)
-- [ ] magic dealers
+- [x] get url for each available card
+- [ ] add categories (creature, instant...)
+- [ ] add quantity (not all mtg players play commander only)
+- [ ] serve card images
 - [ ] create test cases
-- [ ] make it open source
 
 ### API details
 

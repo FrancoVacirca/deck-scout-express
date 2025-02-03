@@ -31,7 +31,10 @@ class TolariaService {
   parseCardDetails(body, filteredCards) {
     const formRegex =
       /<form class="add-to-cart-form" data-vid="(\d+)" data-name="(.+?)" data-id="(\d+)" data-price="(.+?)" data-category="(.+?)" data-variant="(.+?)"/g;
+    const availableCardUrlRegex =
+      /<a href="\/catalog\/(.+?)\/(.+?)\/(\d+)" itemprop="url">/g;
     const matches = [...body.matchAll(formRegex)];
+    const availableMatches = [...body.matchAll(availableCardUrlRegex)];
     const cards = [];
 
     for (const match of matches) {
@@ -49,6 +52,13 @@ class TolariaService {
           category: match[5],
           variant: match[6],
         });
+      }
+    }
+
+    for (const match of availableMatches) {
+      const card = cards.find((card) => card.id === match[3]);
+      if (card) {
+        card.url = `${config.tolariaBaseUrl}/catalog/${match[1]}/${match[2]}/${match[3]}`;
       }
     }
 
