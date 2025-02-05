@@ -56,9 +56,12 @@ class DealersService {
     }
 
     for (const match of availableMatches) {
-      const card = cards.find((card) => card.id === match[3]);
-      if (card) {
-        card.url = `${config.dealersBaseUrl}/catalog/${match[1]}/${match[2]}/${match[3]}`;
+      const matchingCards = cards.filter((card) => card.id === match[3]);
+      if (matchingCards.length > 0) {
+        const cardUrl = `${config.dealersBaseUrl}/catalog/${match[1]}/${match[2]}/${match[3]}`;
+        matchingCards.forEach((card) => {
+          card.url = cardUrl;
+        });
       }
     }
 

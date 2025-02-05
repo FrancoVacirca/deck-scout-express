@@ -13,7 +13,7 @@
 
 ### TODOs
 
-- [x] get url for each available card
+- [x] get url for each available card (for the ones that share the same id and are available then share the same link also)
 - [ ] add categories (creature, instant...)
 - [ ] add quantity (not all mtg players play commander only)
 - [ ] serve card images
