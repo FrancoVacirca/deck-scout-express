@@ -10,13 +10,12 @@
 - [x] organize files on a common structure for better maintainability and code readability (for this see last chat with copilot)
 - [x] magic dealers
 - [x] install and use nodemon
+- [x] get url for each available card (for the ones that share the same id and are available then share the same link also)
+- [x] add categories (creature, instant...)
+- [x] serve card images
 
 ### TODOs
 
-- [x] get url for each available card (for the ones that share the same id and are available then share the same link also)
-- [ ] add categories (creature, instant...)
-- [ ] add quantity (not all mtg players play commander only)
-- [ ] serve card images
 - [ ] create test cases
 
 ### API details

@@ -33,8 +33,11 @@ class MTGPiruloService {
       /<form class="add-to-cart-form" data-vid="(\d+)" data-name="(.+?)" data-id="(\d+)" data-price="(.+?)" data-category="(.+?)" data-variant="(.+?)"/g;
     const availableCardUrlRegex =
       /<a href="\/catalog\/(.+?)\/(.+?)\/(\d+)" itemprop="url">/g;
+    const imageRegex = /<img src="(.+?)" alt="(.+?)" itemprop="image"/g;
     const matches = [...body.matchAll(formRegex)];
     const availableMatches = [...body.matchAll(availableCardUrlRegex)];
+    const imageMatches = [...body.matchAll(imageRegex)];
+    const unavailableCategory = "Juegos de Tablero";
     const cards = [];
 
     for (const match of matches) {
@@ -44,14 +47,16 @@ class MTGPiruloService {
           (card) => card.name === match[2] && card.variant === match[6]
         )
       ) {
-        cards.push({
-          store: "Pirulo",
-          name: match[2],
-          id: match[3],
-          price: match[4],
-          category: match[5],
-          variant: match[6],
-        });
+        if (match[5] !== unavailableCategory) {
+          cards.push({
+            store: "Pirulo",
+            name: match[2],
+            id: match[3],
+            price: match[4],
+            category: match[5],
+            variant: match[6],
+          });
+        }
       }
     }
 
@@ -61,6 +66,15 @@ class MTGPiruloService {
         const cardUrl = `${config.mtgpiruloBaseUrl}/catalog/${match[1]}/${match[2]}/${match[3]}`;
         matchingCards.forEach((card) => {
           card.url = cardUrl;
+        });
+      }
+    }
+
+    for (const match of imageMatches) {
+      const matchingCards = cards.filter((card) => card.name === match[2]);
+      if (matchingCards.length > 0) {
+        matchingCards.forEach((card) => {
+          card.image = match[1];
         });
       }
     }

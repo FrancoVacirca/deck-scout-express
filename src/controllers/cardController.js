@@ -56,6 +56,7 @@ class CardController {
             // id: card.id,
             label: shortLabel,
             quantity: card.quantity,
+            categories: card.categories,
             url: card.url,
             availability: {
               pirulo: piruloCards,

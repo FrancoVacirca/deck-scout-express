@@ -13,7 +13,8 @@ class ArchidektService {
     return data.map((card) => ({
       name: card.card.oracleCard.name,
       quantity: card.quantity,
-      label: card.label
+      label: card.label,
+      categories: card.categories,
     }));
   }
 
