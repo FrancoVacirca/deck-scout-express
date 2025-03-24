@@ -13,6 +13,17 @@ class CardController {
           .send("Card name is required as a query parameter");
       }
 
+      // Check if the search is for a basic land and exclude if it is
+      const basicLands = ["Swamp", "Mountain", "Forest", "Plains", "Island"];
+      if (
+        basicLands.some((land) => name.toLowerCase() === land.toLowerCase())
+      ) {
+        return res.json({
+          name,
+          results: [], // Return empty results for basic lands
+        });
+      }
+
       const [piruloCards, dealersCards, tolariaCards] = await Promise.all([
         mtgpiruloService.searchCard(name),
         dealersService.searchCard(name),
@@ -42,8 +53,19 @@ class CardController {
       const deckId = archidektService.extractDeckId(url);
       const deckCards = await archidektService.getDeckById(deckId);
 
+      // Define basic lands to exclude
+      const basicLands = ["Swamp", "Mountain", "Forest", "Plains", "Island"];
+
+      // Filter out basic lands
+      const nonBasicCards = deckCards.filter(
+        (card) =>
+          !basicLands.some(
+            (land) => card.name.toLowerCase() === land.toLowerCase()
+          )
+      );
+
       const availableCards = await Promise.all(
-        deckCards.map(async (card) => {
+        nonBasicCards.map(async (card) => {
           const [piruloCards, dealersCards, tolariaCards] = await Promise.all([
             mtgpiruloService.searchCard(card.name),
             dealersService.searchCard(card.name),
